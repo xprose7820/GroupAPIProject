@@ -48,7 +48,7 @@ namespace GroupAPIProject.Services.Customer
 
         public async Task<bool> UpdateCustomerAsync(CustomerRegister update)
         {
-            var customerEntity = await _context.Customers.FindAsync(update);
+            var customerEntity = await _context.Customers.FindAsync(update.Id);
             if (customerEntity.Id != null)
                 return false;
             
