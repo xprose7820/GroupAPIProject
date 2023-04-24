@@ -47,12 +47,12 @@ namespace GroupAPIProject.WebAPI.Controllers
 
         [Authorize(Policy = "CustomAdminEntity")]
         [HttpPut]
-        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerRegister update)
+        public async Task<IActionResult> UpdateCustomer([FromBody] int customerId,CustomerUpdate update)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            return await _customerService.UpdateCustomerAsync(update)
+            return await _customerService.UpdateCustomerAsync(customerId,update)
                 ? Ok("Customer was updated successfully.")
                 : BadRequest("Customer was unable to be updated.");
         }
