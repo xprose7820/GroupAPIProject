@@ -43,7 +43,7 @@ namespace GroupAPIProject.Services.SalesOrderItem
             SalesOrderItemEntity entity = new SalesOrderItemEntity{
                 ProductName = inventoryItemExists.ProductName,
                 SalesOrderId = model.SalesOrderId,
-                InventoryItemId = model.InventoryItemId,
+    
                 Quantity = model.Quantity,
                 Price = model.Price
             };
@@ -116,7 +116,22 @@ namespace GroupAPIProject.Services.SalesOrderItem
             
         // }
 
+        public async Task<SalesOrderItemDetail> GetSalesOrderItemById(int salesOrderItemId){
+            SalesOrderItemEntity salesOrderItemExists = await _dbContext.SalesOrders.Where(entity => entity.RetailerId == _retailerId)
+            .Include(g=>g.ListOfSalesOrderItems).SelectMany(g=>g.ListOfSalesOrderItems).FirstOrDefaultAsync(g=>g.Id == salesOrderItemId);
+            if(salesOrderItemExists is null){
+                return null;
+            }
+            SalesOrderItemDetail detail = new SalesOrderItemDetail{
+                Id = salesOrderItemId,
+                SalesOrderId = salesOrderItemExists.SalesOrderId,
+                Quantity = salesOrderItemExists.Quantity,
+                ProductName = salesOrderItemExists.ProductName,
+                Price = salesOrderItemExists.Price
+            };
+            return detail;
 
+        }
 
 
         

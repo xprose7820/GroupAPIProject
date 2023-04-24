@@ -84,6 +84,19 @@ namespace GroupAPIProject.Services.SalesOrder
         //     int numberOfChanges = await _dbContext.SaveChangesAsync();
         //     return numberOfChanges == 1;
         // }
+        public async Task<SalesOrderDetail> GetSalesOrderByIdAsync(int salesOrderId){
+            SalesOrderEntity salesOrderExists = await _dbContext.SalesOrders.Where(entity => entity.RetailerId == _retailerId).FirstOrDefaultAsync(g => g.Id == salesOrderId);
+            if(salesOrderExists is null){
+                return null;
+            }
+            SalesOrderDetail detail = new SalesOrderDetail{
+                Id = salesOrderId,
+                CusomterId = salesOrderExists.CusomterId,
+                LocationId = salesOrderExists.LocationId,
+                OrderDate = salesOrderExists.OrderDate
+            };
+            return detail;
 
+        }
     }
 }
