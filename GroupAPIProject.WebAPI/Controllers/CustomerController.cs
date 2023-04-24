@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GroupAPIProject.WebAPI.Controllers
 {
-    [Authorize(Policy = "CustomAdminEntity")]
     [ApiController]
     [Route("api/[controller]")]
     public class CustomerController : ControllerBase
@@ -32,7 +31,8 @@ namespace GroupAPIProject.WebAPI.Controllers
         //         ? Ok("Customer was deleted successfully.")
         //         : BadRequest("Customer could not be deleted.");
         // }
-
+        
+        [Authorize(Policy = "CustomAdminEntity")]
         [HttpPost]
         public async Task<IActionResult> InputCustomer([FromBody] CustomerRegister newCustomer)
         {
@@ -45,6 +45,7 @@ namespace GroupAPIProject.WebAPI.Controllers
             return BadRequest("Customer could not be added.");
         }
 
+        [Authorize(Policy = "CustomAdminEntity")]
         [HttpPut]
         public async Task<IActionResult> UpdateCustomer([FromBody] CustomerRegister update)
         {
