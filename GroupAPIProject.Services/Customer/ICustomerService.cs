@@ -12,7 +12,7 @@ namespace GroupAPIProject.Services.Customer
 
         Task<bool> RemoveCustomerByIdAsync(int customerId);
 
-        Task<bool> UpdateCustomerAsync(CustomerRegister update);
+        Task<bool> UpdateCustomerAsync(int customerId,CustomerUpdate update);
 
         Task<IEnumerable<CustomerList>> GetCustomerListsAsync();
 
