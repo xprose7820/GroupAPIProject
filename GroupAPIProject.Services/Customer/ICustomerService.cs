@@ -10,7 +10,7 @@ namespace GroupAPIProject.Services.Customer
     {
         Task<bool> CreateCustomerAsync(CustomerRegister newCustomer);
 
-        Task<bool> RemoveCustomerAsync(string name);
+        Task<bool> RemoveCustomerByIdAsync(int customerId);
 
         Task<bool> UpdateCustomerAsync(CustomerRegister update);
 

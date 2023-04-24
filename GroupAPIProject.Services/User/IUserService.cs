@@ -9,9 +9,9 @@ namespace GroupAPIProject.Services.User
     public interface IUserService
     {
         Task<bool> CreateUserAsync(UserCreate newUser);
-        // Task<bool> UpdateUserAsync(UserCreate update);
-        // Task<bool> RemoveUserAsync(UserCreate remove);
-
+        Task<bool> UpdateUserAsync(UserCreate update);
+        Task<bool> RemoveAdminAsync(int userId);
+        Task<bool> RemoveRetailerAsync(int userId);
         Task<IEnumerable<UserList>> GetUserListAsync();
 
     }

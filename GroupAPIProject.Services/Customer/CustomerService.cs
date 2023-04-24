@@ -31,11 +31,14 @@ namespace GroupAPIProject.Services.Customer
             return numberOfChanges == 1;
         }
 
-        public async Task<bool> RemoveCustomerAsync(string customerName)
+        public async Task<bool> RemoveCustomerByIdAsync(int customerId)
         {
-            var customerEntity = await _context.Customers.FirstOrDefaultAsync(n => n.CustomerName == customerName);
-
+            var customerEntity = await _context.Customers.FindAsync(customerId);
             if (customerEntity == null)
+
+                return false;
+
+            if (customerEntity.ListOfSalesOrders.Count == 0)
 
                 return false;
 
@@ -45,7 +48,7 @@ namespace GroupAPIProject.Services.Customer
 
         public async Task<bool> UpdateCustomerAsync(CustomerRegister update)
         {
-            var customerEntity = await _context.Customers.FindAsync(update);
+            var customerEntity = await _context.Customers.FindAsync(update.Id);
             if (customerEntity.Id != null)
                 return false;
             
@@ -67,7 +70,5 @@ namespace GroupAPIProject.Services.Customer
             
             return customer;
         }
-
-        
     }
 }

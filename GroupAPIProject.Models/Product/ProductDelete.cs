@@ -7,8 +7,8 @@ namespace GroupAPIProject.Models.Product
 {
     public class ProductDelete
     {
-        public int SupplierId{get;set;}
         public int ProductId{get;set;}
+        public int SupplierId{get;set;}
         
     }
 }

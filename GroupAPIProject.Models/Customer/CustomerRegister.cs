@@ -7,6 +7,7 @@ namespace GroupAPIProject.Models.Customer
 {
     public class CustomerRegister
     {
+        public int Id {get; set;}
         public string CustomerName { get; set; }
     }
 }
