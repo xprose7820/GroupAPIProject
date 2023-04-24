@@ -30,6 +30,17 @@ namespace GroupAPIProject.WebAPI.Controllers
             }
             return BadRequest("Inventory Item Creation Failed");
         }
+        [HttpPut]
+        public async Task<IActionResult> UpdateInventoryById([FromBody] InventoryItemUpdate model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return await _inventoryItemService.UpdateInventoryItemAsync(model)
+                ? Ok("Inventory Item was updated successfully")
+                : BadRequest("Inventory Item failed to be updated");
+        }
         [HttpDelete]
         public async Task<IActionResult> DeleteInventoryItemById([FromBody] InventoryItemDelete model)
         {
