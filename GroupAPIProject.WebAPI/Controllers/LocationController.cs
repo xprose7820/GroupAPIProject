@@ -34,9 +34,9 @@ namespace GroupAPIProject.WebAPI.Controllers
         }
 
         [HttpDelete("{locationId:int}")]
-        public async Task<IActionResult> RemoveLocation([FromRoute] int locationId)
+        public async Task<IActionResult> RemoveLocationById([FromRoute] int locationId)
         {
-            return await _locationService.RemoveLocationAsync(locationId)
+            return await _locationService.RemoveLocationByIdAsync(locationId)
                 ? Ok($"Location {locationId} was deleted successfully.")
                 : BadRequest($"Location {locationId} could not be deleted.");
         }
