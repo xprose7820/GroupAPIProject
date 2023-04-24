@@ -378,7 +378,7 @@ namespace GroupAPIProject.Data.Migrations
             modelBuilder.Entity("GroupAPIProject.Data.Entities.SalesOrderEntity", b =>
                 {
                     b.HasOne("GroupAPIProject.Data.Entities.CustomerEntity", "Customer")
-                        .WithMany("SalesOrders")
+                        .WithMany("ListOfSalesOrders")
                         .HasForeignKey("CusomterId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -423,7 +423,7 @@ namespace GroupAPIProject.Data.Migrations
 
             modelBuilder.Entity("GroupAPIProject.Data.Entities.CustomerEntity", b =>
                 {
-                    b.Navigation("SalesOrders");
+                    b.Navigation("ListOfSalesOrders");
                 });
 
             modelBuilder.Entity("GroupAPIProject.Data.Entities.LocationEntity", b =>

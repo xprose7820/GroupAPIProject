@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupAPIProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230421164308_initialCreate")]
+    [Migration("20230424140811_initialCreate")]
     partial class initialCreate
     {
         /// <inheritdoc />
@@ -381,7 +381,7 @@ namespace GroupAPIProject.Data.Migrations
             modelBuilder.Entity("GroupAPIProject.Data.Entities.SalesOrderEntity", b =>
                 {
                     b.HasOne("GroupAPIProject.Data.Entities.CustomerEntity", "Customer")
-                        .WithMany("SalesOrders")
+                        .WithMany("ListOfSalesOrders")
                         .HasForeignKey("CusomterId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -426,7 +426,7 @@ namespace GroupAPIProject.Data.Migrations
 
             modelBuilder.Entity("GroupAPIProject.Data.Entities.CustomerEntity", b =>
                 {
-                    b.Navigation("SalesOrders");
+                    b.Navigation("ListOfSalesOrders");
                 });
 
             modelBuilder.Entity("GroupAPIProject.Data.Entities.LocationEntity", b =>

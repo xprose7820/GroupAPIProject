@@ -70,7 +70,5 @@ namespace GroupAPIProject.Services.Customer
             
             return customer;
         }
-
-        
     }
 }
