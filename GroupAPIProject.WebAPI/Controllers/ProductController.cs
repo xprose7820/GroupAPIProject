@@ -1,5 +1,6 @@
 ﻿using GroupAPIProject.Data.Entities;
 using GroupAPIProject.Models.Product;
+using GroupAPIProject.Models.User;
 using GroupAPIProject.Services.Product;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,17 @@ namespace GroupAPIProject.WebAPI.Controllers
                 return Ok("Product Was Created");
             }
             return BadRequest("Product Creation Failed");
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateProductById([FromBody] ProductUpdate model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return await _productService.UpdateProductAsync(model)
+                ? Ok("Product was updated successfully")
+                : BadRequest("Product failed to be updated");
         }
         [HttpDelete]
         public async Task<IActionResult> DeleteProductById([FromBody] ProductDelete model)
