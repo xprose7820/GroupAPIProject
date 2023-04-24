@@ -31,7 +31,7 @@ namespace GroupAPIProject.Services.Customer
             return numberOfChanges == 1;
         }
 
-        public async Task<bool> RemoveCustomerAsync(int customerId)
+        public async Task<bool> RemoveCustomerByIdAsync(int customerId)
         {
             var customerEntity = await _context.Customers.FindAsync(customerId);
             if (customerEntity == null)
@@ -70,7 +70,5 @@ namespace GroupAPIProject.Services.Customer
             
             return customer;
         }
-
-        
     }
 }

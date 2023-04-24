@@ -120,6 +120,16 @@ namespace GroupAPIProject.Services.User
             int counter = await _context.SaveChangesAsync();
             return counter == 1;
         }
+
+        public Task<bool> RemoveAdminAsync(UserCreate remove)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> RemoveRetailerAsync(UserCreate remove)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
