@@ -10,5 +10,6 @@ namespace GroupAPIProject.Services.SalesOrder
     {
         public Task<bool> CreateSalesOrderAsync(SalesOrderCreate model);
         // public Task<bool> UpdateSalesOrderAsync(SalesOrderUpdate model);
+        public Task<SalesOrderDetail> GetSalesOrderByIdAsync(int salesOrderId);
     }
 }

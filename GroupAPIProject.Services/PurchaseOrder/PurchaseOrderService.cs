@@ -80,7 +80,19 @@ namespace GroupAPIProject.Services.PurchaseOrder
         //     int numberOfChanges = await _dbContext.SaveChangesAsync();
         //     return numberOfChanges == 1;
         // }
-        
+        public async Task<PurchaseOrderDetail> GetPurchaseOrderByIdAsync(int purchaseOrderId){
+            PurchaseOrderEntity purchaseOrderExists = await _dbContext.PurchaseOrders.Where(entity => entity.RetailerId == _retailerId).FirstOrDefaultAsync(g => g.Id == purchaseOrderId);
+            if(purchaseOrderExists is null){
+                return null;
+            }
+            PurchaseOrderDetail detail = new PurchaseOrderDetail{
+                Id = purchaseOrderExists.Id,
+                SupplierId = purchaseOrderExists.SupplierId,
+                OrderDate = purchaseOrderExists.OrderDate
+            };
+            return detail;
+            
+        }
 
     }
 }
