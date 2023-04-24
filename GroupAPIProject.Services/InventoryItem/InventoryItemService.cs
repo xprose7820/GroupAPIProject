@@ -50,15 +50,15 @@ namespace GroupAPIProject.Services.InventoryItem
             {
                 return false;
             }
-            ProductEntity obtainingProductName = await _dbContext.Suppliers.Where(entity => entity.Id == purchaseOrderExists.SupplierId)
+            ProductEntity productExists = await _dbContext.Suppliers.Where(entity => entity.Id == purchaseOrderExists.SupplierId)
                 .Include(g => g.ListOfProducts).SelectMany(g => g.ListOfProducts).FirstOrDefaultAsync(g => g.Id == purchaseOrderItemExists.ProductId);
-            if(obtainingProductName is null){
+            if(productExists is null){
                 return false;
             }
 
-            InventoryItemEntity ? entity = new InventoryItemEntity
+            InventoryItemEntity entity = new InventoryItemEntity
             {
-                ProductName = obtainingProductName.ProductName,
+                ProductName = productExists.ProductName,
                 LocationId = model.LocationId,
                 PurchaseOrderId = model.PurchaseOrderId,
                 Stock = purchaseOrderItemExists.Quantity
@@ -115,7 +115,7 @@ namespace GroupAPIProject.Services.InventoryItem
             // return numberOfChanges == 3;
         }
 
-        public async Task<bool> InventoryItemUpdate(InventoryItemUpdate model)
+        public async Task<bool> UpdateInventoryItemAsync(InventoryItemUpdate model)
         {
 
 
@@ -134,6 +134,17 @@ namespace GroupAPIProject.Services.InventoryItem
                 inventoryItemExists.LocationId = model.LocationId;
             }
 
+            int numberOfChanges = await _dbContext.SaveChangesAsync();
+            return numberOfChanges == 1;
+        }
+        public async Task<bool> DeleteInventoryItemByIdAsync(InventoryItemDelete model)
+        {
+            InventoryItemEntity inventoryItemExists = await _dbContext.InventoryItems.FindAsync(model.InventoryItemId);
+            if (inventoryItemExists == null) 
+            {
+                return false;
+            }
+            _dbContext.InventoryItems.Remove(inventoryItemExists);
             int numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
         }
