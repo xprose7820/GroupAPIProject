@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 
 namespace GroupAPIProject.WebAPI.Controllers
-{ [Authorize(Policy = "CustomRetailerEntity")]
+{ 
     [ApiController]
     [Route("api/[controller]")]
     public class LocationController : ControllerBase
@@ -19,6 +19,7 @@ namespace GroupAPIProject.WebAPI.Controllers
             _locationService = locationService;
         }
 
+        [Authorize (Policy = "CustomRetailerEntity")]
         [HttpPost]
         public async Task<IActionResult> CreateLocation(LocationCreate model)
         {
@@ -33,6 +34,7 @@ namespace GroupAPIProject.WebAPI.Controllers
             return BadRequest("Location could not be added to database");
         }
 
+        [Authorize (Policy = "CustomRetailerEntity")]
         [HttpDelete("{locationId:int}")]
         public async Task<IActionResult> RemoveLocationById([FromRoute] int locationId)
         {
@@ -40,6 +42,7 @@ namespace GroupAPIProject.WebAPI.Controllers
                 ? Ok($"Location {locationId} was deleted successfully.")
                 : BadRequest($"Location {locationId} could not be deleted.");
         }
+        
         [HttpGet]
         public async Task<IActionResult> GetSupplierListAsync()
         {
@@ -47,7 +50,7 @@ namespace GroupAPIProject.WebAPI.Controllers
             return Ok(LocationsToDisplay);
         }
 
-        [Authorize(Policy = "CustomAdminEntity")]
+        [Authorize(Policy = "CustomRetailerEntity")]
         [HttpPut("{locationId:int}")]
         public async Task<IActionResult> UpdateLocation([FromRoute]int locationId,[FromBody]LocationUpdate update)
         {
