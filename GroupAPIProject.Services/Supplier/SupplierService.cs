@@ -63,5 +63,18 @@ namespace GroupAPIProject.Services.Supplier
             
             return SupplierToDisplay;
         }
+
+        public async Task<bool> UpdateSupplierByIdAsync(int supplierId, UpdateSupplier update)
+        {
+            var supplierEntity = await _context.Suppliers.FirstOrDefaultAsync(s => s.Id == supplierId);
+            if (supplierEntity == null)
+                return false;
+            
+            supplierEntity.SupplierName = update.SupplierName;
+
+            var numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+            
+        }
     }
 }
