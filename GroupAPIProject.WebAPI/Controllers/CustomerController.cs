@@ -46,7 +46,7 @@ namespace GroupAPIProject.WebAPI.Controllers
         }
 
         [Authorize(Policy = "CustomAdminEntity")]
-        [HttpPut]
+        [HttpPut("{customerId:int}")]
         public async Task<IActionResult> UpdateCustomer([FromRoute]int customerId,[FromBody]CustomerUpdate update)
         {
             if (!ModelState.IsValid)
