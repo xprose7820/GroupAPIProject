@@ -10,5 +10,6 @@ namespace GroupAPIProject.Services.PurchaseOrder
     {
         Task<bool> CreatePurchaseOrderAsync(PurchaseOrderCreate model);
         // Task<bool> UpdatePurchaseOrderAsync(PurchaseOrderUpdate model);
+        Task<PurchaseOrderDetail> GetPurchaseOrderByIdAsync(int purchasOrderId);
     }
 }

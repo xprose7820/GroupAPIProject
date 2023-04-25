@@ -12,5 +12,6 @@ namespace GroupAPIProject.Services.Supplier
         Task<bool> RemoveSupplierAsync(int SupplierId);
         Task<SupplierDetail> GetSupplierByIdAsync(int SupplierId);
         Task<IEnumerable<SupplierDetail>> GetSupplierListAsync();
+        Task<bool> UpdateSupplierByIdAsync(int supplierId, UpdateSupplier update);
     }
 }

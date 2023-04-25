@@ -29,23 +29,26 @@ namespace GroupAPIProject.Services.PurchaseOrderItem
 
         public async Task<bool> CreatePurchaseOrderItemAsync(PurchaseOrderItemCreate model)
         {
-            
+
             PurchaseOrderEntity purchaseOrderExists = await _dbContext.PurchaseOrders.Where(entity => entity.RetailerId == _retailerId).FirstOrDefaultAsync(g => g.Id == model.PurchaseOrderId);
-            if(purchaseOrderExists is null){
+            if (purchaseOrderExists is null)
+            {
                 return false;
             }
             // checks if the product exists in the PurchaseOrder's Supplier's list of products
             ProductEntity productExists = await _dbContext.Suppliers.Where(g => g.Id == purchaseOrderExists.SupplierId)
                 .Include(g => g.ListOfProducts).SelectMany(g => g.ListOfProducts).FirstOrDefaultAsync(g => g.Id == model.ProductId);
-            if(productExists is null){
+            if (productExists is null)
+            {
                 return false;
             }
 
-            PurchaseOrderItemEntity entity = new PurchaseOrderItemEntity{
-                    PurchaseOrderId = model.PurchaseOrderId,
-                    ProductId = model.ProductId,
-                    Quantity = model.Quantity,
-                    Price = model.Price
+            PurchaseOrderItemEntity entity = new PurchaseOrderItemEntity
+            {
+                PurchaseOrderId = model.PurchaseOrderId,
+                ProductId = model.ProductId,
+                Quantity = model.Quantity,
+                Price = model.Price
             };
             _dbContext.PurchaseOrderItems.Add(entity);
             int numberOfChanges = await _dbContext.SaveChangesAsync();
@@ -109,13 +112,13 @@ namespace GroupAPIProject.Services.PurchaseOrderItem
         //     {
         //         return false;
         //     }
-            
+
         //     InventoryItemEntity inventoryItemExists = await _dbContext.InventoryItems.FindAsync(purchaseOrderExists.Id);
         //     if (inventoryItemExists is null || inventoryItemExists.RetailerId != _retailerId)
         //     {
         //         return false;
         //     }
-            
+
         //     if (model.Quantity < originalQuantity)
         //     {
         //         inventoryItemExists.Stock = inventoryItemExists.Stock + (originalQuantity - model.Quantity);
@@ -138,7 +141,25 @@ namespace GroupAPIProject.Services.PurchaseOrderItem
         //     int numberOfChanges = await _dbContext.SaveChangesAsync();
         //     return numberOfChanges == 1;
         // }
-        
+        public async Task<PurchaseOrderItemDetail> GetPurchaseOrderItemByIdAsync(int purchaseOrderItemId)
+        {
+            PurchaseOrderItemEntity purchaseOrderItemExists = await _dbContext.PurchaseOrders.Where(entity => entity.RetailerId == _retailerId)
+                .Include(g => g.ListOfPurchaseOrderItems).SelectMany(g => g.ListOfPurchaseOrderItems).FirstOrDefaultAsync(g => g.Id == purchaseOrderItemId);
+            if (purchaseOrderItemExists is null)
+            {
+                return null;
+            }
+            PurchaseOrderItemDetail detail = new PurchaseOrderItemDetail{
+                Id = purchaseOrderItemExists.Id,
+                PurchaseOrderId = purchaseOrderItemExists.PurchaseOrderId,
+                ProductId = purchaseOrderItemId,
+                Quantiy = purchaseOrderItemExists.Quantity,
+                Price = purchaseOrderItemExists.Price
+
+            };
+            return detail;
+
+        }
 
 
 

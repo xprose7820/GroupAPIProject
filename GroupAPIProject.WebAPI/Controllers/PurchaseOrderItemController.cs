@@ -32,6 +32,17 @@ namespace GroupAPIProject.WebAPI.Controllers
             }
             return BadRequest("ProductOrderItem not added to Retailer");
         }
+        [HttpGet("purchaseOrderItemId:int")]
+        public async Task<IActionResult> GetPurchaseOrderItemById([FromRoute] int purchaseOrderItemId){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            PurchaseOrderItemDetail detail = await _purchaseOrderItemService.GetPurchaseOrderItemByIdAsync(purchaseOrderItemId);
+            if (detail is null){
+                return NotFound();
+            }
+            return Ok(detail);
+        }
 
     }
 }

@@ -46,10 +46,10 @@ namespace GroupAPIProject.Services.Customer
             return await _context.SaveChangesAsync() == 1;
         }
 
-        public async Task<bool> UpdateCustomerAsync(CustomerRegister update)
+        public async Task<bool> UpdateCustomerAsync(int customerId,CustomerUpdate update)
         {
-            var customerEntity = await _context.Customers.FindAsync(update.Id);
-            if (customerEntity.Id != null)
+            var customerEntity = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId);
+            if (customerEntity == null)
                 return false;
             
             customerEntity.CustomerName = update.CustomerName;

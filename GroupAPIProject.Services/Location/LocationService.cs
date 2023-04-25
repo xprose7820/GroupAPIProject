@@ -32,9 +32,9 @@ namespace GroupAPIProject.Services.Location
         {
             LocationEntity locationEntity = new LocationEntity
             {
-
                 LocationName = request.LocationName,
-                RetailerId = _retailerId,
+                Capacity = request.Capacity,
+                RetailerId = _retailerId
 
             };
             _context.Locations.Add(locationEntity);
@@ -42,7 +42,7 @@ namespace GroupAPIProject.Services.Location
             return numberOfChanges == 1;
         }
 
-        public async Task<bool> RemoveLocationAsync(int LocationId)
+        public async Task<bool> RemoveLocationByIdAsync(int LocationId)
         {
             var locationEntity = await _context.Locations.Where(entity => entity.RetailerId == _retailerId).FirstOrDefaultAsync(s => s.Id == LocationId);
 
@@ -50,7 +50,7 @@ namespace GroupAPIProject.Services.Location
             {
                 return false;
             }
-            if (locationEntity.ListOfInventoryItems.Count == 0)
+            if (locationEntity.ListOfInventoryItems.Count != 0)
             {
                 return false;
             }
@@ -69,6 +69,20 @@ namespace GroupAPIProject.Services.Location
                 }).ToListAsync();
             
             return LocationToDisplay;
+        }
+
+        public async Task<bool> UpdateLocationByIdAsync(int locationId,LocationUpdate update)
+        {
+            var locationEntity = await _context.Locations.FirstOrDefaultAsync(c => c.Id == locationId);
+            if (locationEntity == null)
+                return false;
+            
+            locationEntity.LocationName = update.LocationName;
+            locationEntity.Capacity = update.Capacity;
+
+            var numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+            
         }
     }
 }
