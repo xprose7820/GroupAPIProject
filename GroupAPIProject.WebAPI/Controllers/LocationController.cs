@@ -46,5 +46,17 @@ namespace GroupAPIProject.WebAPI.Controllers
             var LocationsToDisplay = await _locationService.GetLocationListAsync();
             return Ok(LocationsToDisplay);
         }
+
+        [Authorize(Policy = "CustomAdminEntity")]
+        [HttpPut("{locationId:int}")]
+        public async Task<IActionResult> UpdateLocation([FromRoute]int locationId,[FromBody]LocationUpdate update)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _locationService.UpdateLocationByIdAsync(locationId,update)
+                ? Ok("Location was updated successfully.")
+                : BadRequest("Location was unable to be updated.");
+        }
     }
 }
