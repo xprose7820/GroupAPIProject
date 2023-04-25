@@ -49,7 +49,7 @@ namespace GroupAPIProject.Services.Customer
         public async Task<bool> UpdateCustomerAsync(int customerId,CustomerUpdate update)
         {
             var customerEntity = await _context.Customers.FirstOrDefaultAsync(c => c.Id == customerId);
-            if (customerEntity.Id == null)
+            if (customerEntity == null)
                 return false;
             
             customerEntity.CustomerName = update.CustomerName;
