@@ -144,6 +144,7 @@ namespace GroupAPIProject.Services.InventoryItem
             {
                 return false;
             }
+          
             _dbContext.InventoryItems.Remove(inventoryItemExists);
             int numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;

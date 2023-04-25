@@ -9,7 +9,7 @@ namespace GroupAPIProject.Models.Product
 {
     public class ProductListItem
     {
-
+        public int SupplierId { get; set; }
         public int Id { get; set; }
 
         public string ProductName { get; set; }
