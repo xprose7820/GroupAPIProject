@@ -47,7 +47,7 @@ namespace GroupAPIProject.WebAPI.Controllers
 
         [Authorize(Policy = "CustomAdminEntity")]
         [HttpPut]
-        public async Task<IActionResult> UpdateCustomer([FromBody] int customerId,CustomerUpdate update)
+        public async Task<IActionResult> UpdateCustomer([FromRoute]int customerId,[FromBody]CustomerUpdate update)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
