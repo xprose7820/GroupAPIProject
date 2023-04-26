@@ -31,6 +31,20 @@ namespace GroupAPIProject.WebAPI.Controllers
             }
             return BadRequest("Product Creation Failed");
         }
+        [HttpGet]
+        public async Task<IActionResult> GetProductById([FromRoute] int productId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            ProductDetail productDetail = await _productService.GetProductByIdAsync(productId);
+            if (productDetail != null)
+            {
+                return Ok("Get Product Worked");
+            }
+            return BadRequest("Get Method Failed");
+        }
         [HttpPut]
         public async Task<IActionResult> UpdateProductById([FromBody] ProductUpdate model)
         {
@@ -55,30 +69,5 @@ namespace GroupAPIProject.WebAPI.Controllers
             }
             return BadRequest("Product Deletion Failed");
         }
-
-
-        [HttpGet("supplierId:int")]
-        public async Task<IActionResult> GetProductListBySupplierId([FromRoute] int supplierId)
-        {
-            if (!ModelState.IsValid) 
-            {
-                return BadRequest(ModelState);
-            }
-            else if (await _productService.GetProductListAsync(supplierId) != null)
-            {
-                await _productService.GetProductListAsync(supplierId);
-                return Ok("Get Product List Worked");
-            }
-            return BadRequest("Get Method Failed");
-        }
-        // [HttpGet]
-        // public async Task<IActionResult> GetProductDetails(ProductDetail model)
-        // {
-        //     if (!ModelState.IsValid)
-        //     {
-        //         return BadRequest(ModelState);
-        //     }
-            
-        // }
     }
 }
