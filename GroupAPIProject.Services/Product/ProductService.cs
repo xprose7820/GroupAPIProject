@@ -39,10 +39,13 @@ namespace GroupAPIProject.Services.Product
             int numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
         }
-        //public async Task<IEnumerable<ProductListItem>> GetProductListAsync(ProductListItem model)
-        //{
-        //    IEnumerable<ProductListItem> productList = await _dbContext.Suppliers.Where(g => g.Id == model.SupplierId).ForEachAsync<ProductEntity>(
-        //}
+        public async Task<IEnumerable<ProductListItem>> GetProductListAsync(int supplierId)
+        {
+            SupplierEntity SupplierExists = await _dbContext.Suppliers.Where(g => g.Id == supplierId).FirstOrDefaultAsync(g => g.Id == supplierId);
+
+            return (IEnumerable<ProductListItem>)SupplierExists.ListOfProducts;
+             
+        }
 
         public async Task<bool> UpdateProductAsync(ProductUpdate model)
         {

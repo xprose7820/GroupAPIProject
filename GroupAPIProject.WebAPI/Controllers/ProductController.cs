@@ -57,15 +57,16 @@ namespace GroupAPIProject.WebAPI.Controllers
         }
 
 
-        [HttpGet("{supplierId: int}")]
+        [HttpGet("supplierId:int")]
         public async Task<IActionResult> GetProductListBySupplierId([FromRoute] int supplierId)
         {
             if (!ModelState.IsValid) 
             {
                 return BadRequest(ModelState);
             }
-            if (await _productService.GetProductListAsync(supplierId) != null)
+            else if (await _productService.GetProductListAsync(supplierId) != null)
             {
+                await _productService.GetProductListAsync(supplierId);
                 return Ok("Get Product List Worked");
             }
             return BadRequest("Get Method Failed");
