@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace GroupAPIProject.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class initialCreate : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -213,7 +213,6 @@ namespace GroupAPIProject.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    InventoryItemId = table.Column<int>(type: "int", nullable: false),
                     SalesOrderId = table.Column<int>(type: "int", nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
@@ -222,12 +221,6 @@ namespace GroupAPIProject.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SalesOrderItems", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SalesOrderItems_InventoryItems_InventoryItemId",
-                        column: x => x.InventoryItemId,
-                        principalTable: "InventoryItems",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SalesOrderItems_SalesOrders_SalesOrderId",
                         column: x => x.SalesOrderId,
@@ -272,11 +265,6 @@ namespace GroupAPIProject.Data.Migrations
                 column: "SupplierId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SalesOrderItems_InventoryItemId",
-                table: "SalesOrderItems",
-                column: "InventoryItemId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SalesOrderItems_SalesOrderId",
                 table: "SalesOrderItems",
                 column: "SalesOrderId");
@@ -301,6 +289,9 @@ namespace GroupAPIProject.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "InventoryItems");
+
+            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
@@ -310,22 +301,19 @@ namespace GroupAPIProject.Data.Migrations
                 name: "SalesOrderItems");
 
             migrationBuilder.DropTable(
-                name: "InventoryItems");
+                name: "PurchaseOrders");
 
             migrationBuilder.DropTable(
                 name: "SalesOrders");
 
             migrationBuilder.DropTable(
-                name: "PurchaseOrders");
+                name: "Suppliers");
 
             migrationBuilder.DropTable(
                 name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "Locations");
-
-            migrationBuilder.DropTable(
-                name: "Suppliers");
 
             migrationBuilder.DropTable(
                 name: "Users");

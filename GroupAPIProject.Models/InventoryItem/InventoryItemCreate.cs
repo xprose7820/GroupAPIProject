@@ -9,8 +9,8 @@ namespace GroupAPIProject.Models.InventoryItem
 {
     public class InventoryItemCreate
     {
-        public int PurchaseOrderId{get;set;}
-        public int PurchaseOrderItemId { get;set;}
+        public int PurchaseOrderId { get; set; }
+        public int PurchaseOrderItemId { get; set; }
         public int LocationId { get; set; }
     }
 }
