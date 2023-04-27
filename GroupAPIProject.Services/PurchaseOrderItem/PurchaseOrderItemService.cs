@@ -160,6 +160,40 @@ namespace GroupAPIProject.Services.PurchaseOrderItem
             return detail;
 
         }
+         public async Task<IEnumerable<PurchaseOrderItemListItem>> GetAllPurchaseOrderItemFromAllPurchaseOrderAsync()
+        {
+            List<PurchaseOrderItemEntity> purchaseOrderItems = await _dbContext.PurchaseOrders.Where(entity => entity.RetailerId == _retailerId)
+            .Include(g => g.ListOfPurchaseOrderItems).SelectMany(s => s.ListOfPurchaseOrderItems).ToListAsync();
+
+            List<ProductEntity> products = await _dbContext.Suppliers.Include(g => g.ListOfProducts).SelectMany(g => g.ListOfProducts).ToListAsync();
+
+            IEnumerable<Task<PurchaseOrderItemListItem>> detailsTasks = purchaseOrderItems.Select(async poi =>
+            {
+                string productName = products.FirstOrDefault(g => g.Id == poi.ProductId)?.ProductName;
+                return new PurchaseOrderItemListItem
+                {
+                    Id = poi.Id,
+                    PurchaseOrderId = poi.PurchaseOrderId,
+                    ProductName = productName,
+                    Quantity = poi.Quantity
+                };
+            });
+
+            PurchaseOrderItemListItem[] details = await Task.WhenAll(detailsTasks);
+
+            return details;
+
+        }
+
+        public async Task<string> GetProductNameFromProductId(int productId)
+        {
+            ProductEntity productExists = await _dbContext.Suppliers.Include(g => g.ListOfProducts).SelectMany(g => g.ListOfProducts).FirstOrDefaultAsync(g => g.Id == productId);
+            if (productExists is null)
+            {
+                return null;
+            }
+            return productExists.ProductName;
+        }
 
 
 
