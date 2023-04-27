@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace GroupAPIProject.WebAPI.Controllers
 {
 
-    [Authorize(Policy = "CustomAdminEntity")]
+
     [ApiController]
     [Route("api/[controller]")]
     public class SupplierController : ControllerBase
@@ -36,10 +36,10 @@ namespace GroupAPIProject.WebAPI.Controllers
             return BadRequest("Supplier could not be added to database");
         }
 
-        
+
 
         [HttpGet("{SupplierId:int}")]
-        public async Task<IActionResult> GetSupplierByIdAsync([FromRoute]int SupplierId)
+        public async Task<IActionResult> GetSupplierByIdAsync([FromRoute] int SupplierId)
         {
             var SupplierToDisplay = await _supplierService.GetSupplierByIdAsync(SupplierId);
             return Ok(SupplierToDisplay);
@@ -52,12 +52,25 @@ namespace GroupAPIProject.WebAPI.Controllers
             return Ok(SuppliersToDisplay);
         }
 
+        [Authorize(Policy = "CustomAdminEntity")]
         [HttpDelete("{supplierId:int}")]
         public async Task<IActionResult> DeleteSupplier([FromRoute] int supplierId)
         {
             return await _supplierService.RemoveSupplierAsync(supplierId)
                 ? Ok($"Supplier {supplierId} was deleted successfully.")
                 : BadRequest($"Supplier {supplierId} could not be deleted.");
+        }
+
+        [Authorize(Policy = "CustomAdminEntity")]
+        [HttpPut("{supplierId:int}")]
+        public async Task<IActionResult> UpdateSupplier([FromRoute] int supplierId, [FromBody] UpdateSupplier update)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            return await _supplierService.UpdateSupplierByIdAsync(supplierId, update)
+                ? Ok("Supplier was updated successfully.")
+                : BadRequest("Supplier was unable to be updated.");
         }
     }
 }

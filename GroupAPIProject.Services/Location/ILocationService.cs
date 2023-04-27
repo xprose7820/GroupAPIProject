@@ -11,5 +11,7 @@ namespace GroupAPIProject.Services.Location
         Task<bool> CreateLocationAsync(LocationCreate request);
         Task<bool> RemoveLocationByIdAsync(int LocationId);
         Task<IEnumerable<LocationDetail>> GetLocationListAsync();
+
+        Task<bool> UpdateLocationByIdAsync(int locationId,LocationUpdate update);
     }
 }

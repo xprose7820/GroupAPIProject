@@ -70,5 +70,19 @@ namespace GroupAPIProject.Services.Location
             
             return LocationToDisplay;
         }
+
+        public async Task<bool> UpdateLocationByIdAsync(int locationId,LocationUpdate update)
+        {
+            var locationEntity = await _context.Locations.FirstOrDefaultAsync(c => c.Id == locationId);
+            if (locationEntity == null)
+                return false;
+            
+            locationEntity.LocationName = update.LocationName;
+            locationEntity.Capacity = update.Capacity;
+
+            var numberOfChanges = await _context.SaveChangesAsync();
+            return numberOfChanges == 1;
+            
+        }
     }
 }
