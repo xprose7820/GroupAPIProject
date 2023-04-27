@@ -12,7 +12,7 @@ namespace GroupAPIProject.Models.Product
     public class ProductDetail
     {
         [Key]
-        public int Id { get; set; }
+        public int ProductId { get; set; }
         [Required]
         public string ProductName { get; set; }
         [Required]

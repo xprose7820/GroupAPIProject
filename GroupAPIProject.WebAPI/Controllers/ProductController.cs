@@ -29,21 +29,24 @@ namespace GroupAPIProject.WebAPI.Controllers
             {
                 return Ok("Product Was Created");
             }
+            else
+            {
             return BadRequest("Product Creation Failed");
+            }
         }
         [HttpGet]
-        public async Task<IActionResult> GetProductById([FromRoute] int productId)
+        public async Task<IActionResult> GetProductById([FromRoute] int supplierId,[FromRoute] int productId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            ProductDetail productDetail = await _productService.GetProductByIdAsync(productId);
-            if (productDetail != null)
+            ProductDetail productDetail = await _productService.GetProductByIdAsync(supplierId, productId);
+            if (productDetail == null) 
             {
-                return Ok("Get Product Worked");
+                return NotFound();
             }
-            return BadRequest("Get Method Failed");
+            return Ok(productDetail);
         }
         [HttpPut]
         public async Task<IActionResult> UpdateProductById([FromBody] ProductUpdate model)
@@ -67,7 +70,10 @@ namespace GroupAPIProject.WebAPI.Controllers
             {
                 return Ok("Product Was Deleted");
             }
-            return BadRequest("Product Deletion Failed");
+            else
+            {
+                return BadRequest("Product Deletion Failed");
+            }
         }
     }
 }
