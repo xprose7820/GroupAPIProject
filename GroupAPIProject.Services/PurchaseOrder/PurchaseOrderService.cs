@@ -93,6 +93,31 @@ namespace GroupAPIProject.Services.PurchaseOrder
             return detail;
             
         }
+        public async Task<PurchaseOrderDetail> DoesPurchaseOrderExistBySupplierIdAsync(int supplierId){
+            PurchaseOrderEntity purchaseOrderExists = await _dbContext.PurchaseOrders.Where(entity => entity.RetailerId == _retailerId).FirstOrDefaultAsync(g=>g.SupplierId == supplierId);
+            if(purchaseOrderExists is null){
+                return null;
+            }
+            PurchaseOrderDetail detail = new PurchaseOrderDetail{
+                Id = purchaseOrderExists.Id,
+                SupplierId = purchaseOrderExists.SupplierId,
+                OrderDate = purchaseOrderExists.OrderDate
+            };
+            return detail;
+        }
+        public async Task<PurchaseOrderDetail> GetPurchaseOrderByPurchaseOrderItemIdAsync(int purchaseOrderItemId){
+            PurchaseOrderEntity purchaseOrderExists = await _dbContext.PurchaseOrders.Where(entity => entity.RetailerId == _retailerId).FirstOrDefaultAsync(g => g.Id == purchaseOrderItemId);
+            if(purchaseOrderExists is null){
+                return null;
+            }
+            PurchaseOrderDetail detail = new PurchaseOrderDetail{
+                Id = purchaseOrderExists.Id,
+                SupplierId = purchaseOrderExists.SupplierId,
+                OrderDate = purchaseOrderExists.OrderDate
+            };
+            return detail;
+            
+        }
 
     }
 }

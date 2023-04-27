@@ -45,5 +45,16 @@ namespace GroupAPIProject.WebAPI.Controllers
             return Ok(detail);
             
         }
+         [HttpGet("~/ByCustomerId/{customerId:int}")]
+        public async Task<IActionResult> DoesSalesOrderExistByCustomerId([FromRoute] int customerId){
+            if(!ModelState.IsValid){
+                return BadRequest();
+            }
+            SalesOrderDetail detail = await _salesOrderService.DoesSalesOrderExistByCustomerId(customerId);
+            if (detail is null){
+                return BadRequest("product does not exsit ");
+            }
+            return Ok(detail);
+        }
     }
 }
