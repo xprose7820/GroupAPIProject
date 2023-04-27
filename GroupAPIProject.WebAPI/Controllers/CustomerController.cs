@@ -24,7 +24,8 @@ namespace GroupAPIProject.WebAPI.Controllers
             _customerService = customerService;
         }
 
-        // [HttpDelete]
+        // [Authorize(Policy = "CustomAdminEntity")]
+        // [HttpDelete("{customerId:int}")]
         // public async Task<IActionResult> RemoveCustomer([FromBody] int customerId)
         // {
         //     return await _customerService.RemoveCustomerByIdAsync(customerId)

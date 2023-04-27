@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupAPIProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230427201233_BlueBadge")]
+    [Migration("20230427203642_BlueBadge")]
     partial class BlueBadge
     {
         /// <inheritdoc />
