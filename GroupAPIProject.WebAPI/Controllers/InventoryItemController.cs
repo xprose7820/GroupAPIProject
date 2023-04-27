@@ -30,6 +30,20 @@ namespace GroupAPIProject.WebAPI.Controllers
             }
             return BadRequest("Inventory Item Creation Failed");
         }
+        [HttpGet]
+        public async Task<IActionResult> GetInventoryItemById([FromRoute] int inventoryItemId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            InventoryItemDetail inventoryItemDetail = await _inventoryItemService.GetInventoryItemByIdAsync(inventoryItemId);
+            if (inventoryItemDetail != null)
+            {
+                return Ok("Get Inventory Item Worked");
+            }
+            return BadRequest("Get Method Failed");
+        }
         [HttpPut]
         public async Task<IActionResult> UpdateInventoryById([FromBody] InventoryItemUpdate model)
         {

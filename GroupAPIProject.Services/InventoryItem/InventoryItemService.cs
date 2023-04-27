@@ -144,9 +144,27 @@ namespace GroupAPIProject.Services.InventoryItem
             {
                 return false;
             }
+          
             _dbContext.InventoryItems.Remove(inventoryItemExists);
             int numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
+        }
+        public async Task<InventoryItemDetail> GetInventoryItemByIdAsync(int inventoryItemId)
+        {
+            InventoryItemEntity inventoryItemExists = await _dbContext.InventoryItems.FindAsync(inventoryItemId);
+            if (inventoryItemExists == null)
+            {
+                return null;
+            }
+            InventoryItemDetail inventoryItemDetail = new InventoryItemDetail
+            {
+                Id = inventoryItemExists.Id,
+                PurchaseOrderId = inventoryItemExists.PurchaseOrderId,
+                LocationId = inventoryItemExists.LocationId,
+                Stock = inventoryItemExists.Stock,
+            };
+            return inventoryItemDetail;
+
         }
 
 
