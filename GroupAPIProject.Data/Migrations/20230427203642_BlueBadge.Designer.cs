@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GroupAPIProject.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230427182836_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230427203642_BlueBadge")]
+    partial class BlueBadge
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

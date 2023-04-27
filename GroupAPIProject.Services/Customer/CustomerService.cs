@@ -19,7 +19,7 @@ namespace GroupAPIProject.Services.Customer
         }
 
         public async Task<bool> CreateCustomerAsync(CustomerRegister newCustomer)
-        {
+        {   
             var customerEntity = new CustomerEntity
             {
                 CustomerName = newCustomer.CustomerName

@@ -20,16 +20,6 @@ using GroupAPIProject.Services.User;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddCors(options =>
-    {
-        options.AddPolicy(name: "MyPolicy",
-            builder =>
-            {
-                builder.WithOrigins("http://127.0.0.1:5500")
-                    .AllowAnyHeader()
-                    .AllowAnyMethod();
-            });
-    });
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), sqlOptions => sqlOptions.EnableRetryOnFailure()));
 builder.Services.AddHttpContextAccessor();
 
@@ -136,7 +126,6 @@ app.UseAuthentication();
 
 app.UseAuthorization();
 
-app.UseCors("MyPolicy");
 app.MapControllers();
 
 app.Run();
