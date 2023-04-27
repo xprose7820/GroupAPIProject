@@ -219,9 +219,6 @@ namespace GroupAPIProject.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("InventoryItemId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
@@ -236,8 +233,6 @@ namespace GroupAPIProject.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InventoryItemId");
 
                     b.HasIndex("SalesOrderId");
 
@@ -404,19 +399,11 @@ namespace GroupAPIProject.Data.Migrations
 
             modelBuilder.Entity("GroupAPIProject.Data.Entities.SalesOrderItemEntity", b =>
                 {
-                    b.HasOne("GroupAPIProject.Data.Entities.InventoryItemEntity", "InventoryItem")
-                        .WithMany()
-                        .HasForeignKey("InventoryItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GroupAPIProject.Data.Entities.SalesOrderEntity", "SalesOrder")
                         .WithMany("ListOfSalesOrderItems")
                         .HasForeignKey("SalesOrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("InventoryItem");
 
                     b.Navigation("SalesOrder");
                 });
