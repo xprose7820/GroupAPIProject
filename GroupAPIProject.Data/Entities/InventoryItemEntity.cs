@@ -19,7 +19,7 @@ namespace GroupAPIProject.Data.Entities
         // should pull productName from purchaseOrder, then purchaseOrderItem
         
         [Required]
-        public string ProductName{get;set;}
+        public string ProductName {get;set;}
 
         [Required]
         [ForeignKey("Location")]

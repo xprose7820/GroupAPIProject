@@ -36,12 +36,12 @@ namespace GroupAPIProject.Services.InventoryItem
             {
                 return false;
             }
-            LocationEntity locationExists = await _dbContext.Locations.Where(entity => entity.RetailerId == _retailerId).FirstOrDefaultAsync(g => g.Id == model.LocationId);
-            if (locationExists is null || locationExists.Capacity < purchaseOrderItemExists.Quantity)
+            if (purchaseOrderItemExists.Quantity == 0)
             {
                 return false;
             }
-            if (purchaseOrderItemExists.Quantity == 0)
+            LocationEntity locationExists = await _dbContext.Locations.Where(entity => entity.RetailerId == _retailerId).FirstOrDefaultAsync(g => g.Id == model.LocationId);
+            if (locationExists is null || locationExists.Capacity < purchaseOrderItemExists.Quantity)
             {
                 return false;
             }

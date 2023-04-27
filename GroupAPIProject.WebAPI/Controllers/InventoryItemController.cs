@@ -28,9 +28,12 @@ namespace GroupAPIProject.WebAPI.Controllers
             {
                 return Ok("Inventory Item Was Created");
             }
-            return BadRequest("Inventory Item Creation Failed");
+            else
+            {
+                return BadRequest("Inventory Item Creation Failed");
+            }
         }
-        [HttpGet]
+        [HttpGet("{inventoryItemId:int}")]
         public async Task<IActionResult> GetInventoryItemById([FromRoute] int inventoryItemId)
         {
             if (!ModelState.IsValid)
@@ -38,11 +41,11 @@ namespace GroupAPIProject.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
             InventoryItemDetail inventoryItemDetail = await _inventoryItemService.GetInventoryItemByIdAsync(inventoryItemId);
-            if (inventoryItemDetail != null)
+            if (inventoryItemDetail == null)
             {
-                return Ok("Get Inventory Item Worked");
+                return NotFound();
             }
-            return BadRequest("Get Method Failed");
+            return Ok(inventoryItemDetail);
         }
         [HttpPut]
         public async Task<IActionResult> UpdateInventoryById([FromBody] InventoryItemUpdate model)

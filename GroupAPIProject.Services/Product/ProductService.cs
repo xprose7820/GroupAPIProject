@@ -41,24 +41,24 @@ namespace GroupAPIProject.Services.Product
         }
         public async Task<ProductDetail> GetProductByIdAsync(int supplierId,int productId)
         {
-            SupplierEntity supplierExists = await _dbContext.Suppliers.FindAsync(supplierId);
+            SupplierEntity supplierExists = await _dbContext.Suppliers.Where(g => g.Id == supplierId).FirstOrDefaultAsync();
             if (supplierExists == null) 
             {
                 return null;
             }
-            ProductEntity ProductExists = await _dbContext.Suppliers.Where(g => g.Id == supplierId).Include(g => g.ListOfProducts)
-                .SelectMany(g => g.ListOfProducts).FirstOrDefaultAsync(g => g.Id == productId);
-            if (ProductExists == null) 
+            ProductEntity productExists = await _dbContext.Suppliers.Where(g => g.Id == supplierId)
+            .Include(g => g.ListOfProducts).SelectMany(g => g.ListOfProducts).FirstOrDefaultAsync(g => g.Id == productId);
+            if (productExists == null)
             {
                 return null;
             }
             ProductDetail productDetail = new ProductDetail
             {
-                ProductId = ProductExists.Id,
-                ProductName = ProductExists.ProductName,
-                Description = ProductExists.Description,
-                Category = ProductExists.Category,
-                Price = ProductExists.Price,
+                ProductId = productExists.Id,
+                ProductName = productExists.ProductName,
+                Description = productExists.Description,
+                Category = productExists.Category,
+                Price = productExists.Price,
             };
             return productDetail;
         }
