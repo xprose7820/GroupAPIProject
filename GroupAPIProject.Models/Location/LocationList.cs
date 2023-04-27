@@ -10,6 +10,6 @@ namespace GroupAPIProject.Models.Location
         public int Id { get; set; }
         public string LocationName { get; set; }
         public int Capacity { get; set; }
-        public int RetailerId { get; set; }
+        
     }
 }

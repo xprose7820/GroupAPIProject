@@ -45,6 +45,31 @@ namespace GroupAPIProject.WebAPI.Controllers
             }
             return Ok(detail);
         }
+          [HttpGet("~/BySupplier/{supplierId:int}")]
+        public async Task<IActionResult> DoesPurchaseOrderExistBySupplierId([FromRoute] int supplierId){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            PurchaseOrderDetail detail = await _purchaseOrderService.DoesPurchaseOrderExistBySupplierIdAsync(supplierId);
+            if(detail is null){
+                return BadRequest("purchaseOrder does not exist");
+                
+
+            }
+            return Ok(detail);
+        }
+        // whats happending is that we 
+        [HttpGet("~/PurchaseOrderItemId/{purchaseOrderItemId:int}")] 
+        public async Task<IActionResult> GetPurchaseOrderByPurchaseOrderItemId([FromRoute] int purchaseOrderItemId){
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            PurchaseOrderDetail detail = await _purchaseOrderService.GetPurchaseOrderByIdAsync(purchaseOrderItemId);
+            if (detail is null){
+                return BadRequest();
+            }
+            return Ok(detail);
+        }
 
     }
 }
