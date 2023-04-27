@@ -7,8 +7,8 @@ A system in which retailers can make an account and create a database of locatio
 As well keep an online record of purchase orders for products and the sales of the products
 
 Here is a list linking to our resources for more information on the tables within our database, as well as instructions on how to navigate the Api
-# Api Navigation
-- [Api Navigation](./ApiNavigation.md)
+# Api End Point Navigation
+- [Api Navigation](./ApiEndPointNavigation.md)
 # Database Tables
 - [User](./DatabaseTables/User.md)
 - [Supplier](./DatabaseTables/Supplier.md)
