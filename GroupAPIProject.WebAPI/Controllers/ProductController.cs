@@ -8,16 +8,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GroupAPIProject.WebAPI.Controllers
 {
-    [Authorize(Policy = "CustomAdminEntity")]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        public ProductController(IProductService productService) 
+        public ProductController(IProductService productService)
         {
             _productService = productService;
         }
+        [Authorize(Policy = "CustomAdminEntity")]
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] ProductCreate model)
         {
@@ -29,22 +30,28 @@ namespace GroupAPIProject.WebAPI.Controllers
             {
                 return Ok("Product Was Created");
             }
-            return BadRequest("Product Creation Failed");
+            else
+            {
+                return BadRequest("Product Creation Failed");
+            }
         }
-        [HttpGet]
-        public async Task<IActionResult> GetProductById([FromRoute] int productId)
+        [Authorize(Policy = "CustomRetailerEntity")]
+        [Authorize(Policy = "CustomAdminEntity")]
+        [HttpGet("{supplierId:int}/{productId:int}")]
+        public async Task<IActionResult> GetProductById([FromRoute] int supplierId,[FromRoute] int productId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            ProductDetail productDetail = await _productService.GetProductByIdAsync(productId);
-            if (productDetail != null)
+            ProductDetail productDetail = await _productService.GetProductByIdAsync(supplierId, productId);
+            if (productDetail == null) 
             {
-                return Ok("Get Product Worked");
+                return NotFound();
             }
-            return BadRequest("Get Method Failed");
+            return Ok(productDetail);
         }
+        [Authorize(Policy = "CustomAdminEntity")]
         [HttpPut]
         public async Task<IActionResult> UpdateProductById([FromBody] ProductUpdate model)
         {
@@ -56,6 +63,7 @@ namespace GroupAPIProject.WebAPI.Controllers
                 ? Ok("Product was updated successfully")
                 : BadRequest("Product failed to be updated");
         }
+        [Authorize(Policy = "CustomAdminEntity")]
         [HttpDelete]
         public async Task<IActionResult> DeleteProductById([FromBody] ProductDelete model)
         {
@@ -67,7 +75,10 @@ namespace GroupAPIProject.WebAPI.Controllers
             {
                 return Ok("Product Was Deleted");
             }
-            return BadRequest("Product Deletion Failed");
+            else
+            {
+                return BadRequest("Product Deletion Failed");
+            }
         }
     }
 }

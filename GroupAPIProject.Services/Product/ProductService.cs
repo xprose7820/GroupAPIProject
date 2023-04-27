@@ -39,20 +39,26 @@ namespace GroupAPIProject.Services.Product
             int numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 1;
         }
-        public async Task<ProductDetail> GetProductByIdAsync(int productId)
+        public async Task<ProductDetail> GetProductByIdAsync(int supplierId,int productId)
         {
-            ProductEntity ProductExists = await _dbContext.Products.FindAsync(productId);
-            if (ProductExists == null) 
+            SupplierEntity supplierExists = await _dbContext.Suppliers.Where(g => g.Id == supplierId).FirstOrDefaultAsync();
+            if (supplierExists == null) 
+            {
+                return null;
+            }
+            ProductEntity productExists = await _dbContext.Suppliers.Where(g => g.Id == supplierId)
+            .Include(g => g.ListOfProducts).SelectMany(g => g.ListOfProducts).FirstOrDefaultAsync(g => g.Id == productId);
+            if (productExists == null)
             {
                 return null;
             }
             ProductDetail productDetail = new ProductDetail
             {
-                Id = ProductExists.Id,
-                ProductName = ProductExists.ProductName,
-                Description = ProductExists.Description,
-                Category = ProductExists.Category,
-                Price = ProductExists.Price,
+                ProductId = productExists.Id,
+                ProductName = productExists.ProductName,
+                Description = productExists.Description,
+                Category = productExists.Category,
+                Price = productExists.Price,
             };
             return productDetail;
         }

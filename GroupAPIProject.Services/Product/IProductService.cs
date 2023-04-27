@@ -11,7 +11,7 @@ namespace GroupAPIProject.Services.Product
     public interface IProductService
     {
         Task<bool> CreateProductAsync(ProductCreate model);
-        Task<ProductDetail> GetProductByIdAsync(int productId);
+        Task<ProductDetail> GetProductByIdAsync(int supplierId,int productId);
         Task<bool> UpdateProductAsync(ProductUpdate model);
         Task<bool> DeleteProductByIdAsync(ProductDelete model);
 

@@ -43,6 +43,15 @@ namespace GroupAPIProject.WebAPI.Controllers
             }
             return Ok(detail);
         }
+         [HttpGet]
+        public async Task<IActionResult> GetAllPurchaseOrderItemFromAllPurchaseOrder(){
+            IEnumerable<PurchaseOrderItemListItem> details = await _purchaseOrderItemService.GetAllPurchaseOrderItemFromAllPurchaseOrderAsync();
+            if(details is null){
+                return BadRequest();
+            }
+            return Ok(details);
+        }
+
 
     }
 }
