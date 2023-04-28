@@ -53,7 +53,8 @@ namespace GroupAPIProject.Services.InventoryItem
             }
             ProductEntity productExists = await _dbContext.Suppliers.Where(entity => entity.Id == purchaseOrderExists.SupplierId)
                 .Include(g => g.ListOfProducts).SelectMany(g => g.ListOfProducts).FirstOrDefaultAsync(g => g.Id == purchaseOrderItemExists.ProductId);
-            if(productExists is null){
+            if (productExists is null)
+            {
                 return false;
             }
 
@@ -71,51 +72,7 @@ namespace GroupAPIProject.Services.InventoryItem
             _dbContext.InventoryItems.Add(entity);
             int numberOfChanges = await _dbContext.SaveChangesAsync();
             return numberOfChanges == 3;
-            // handle renaming purchaseorderitem
-
-            // PurchaseOrderItemEntity blah = await _dbContext.PurchaseOrders.Include(g => g.ListOfPurchaseOrderItems).FirstOrDefaultAsync()
-            // RetailerEntity retailerExists = await _dbContext.Users.OfType<RetailerEntity>().FirstOrDefaultAsync(g => g.Id == model.RetailerId);
-            // if (retailerExists == null || retailerExists.Id == _retailerId)
-            // {
-            //     return false;
-            // }
-
-            // PurchaseOrderEntity purchaseOrderExists = await _dbContext.PurchaseOrders.FindAsync(model.PurchaseOrderId);
-            // if (purchaseOrderExists == null || purchaseOrderExists.Retailer.Id != _retailerId) 
-            // {
-            //     return false;
-            // }
-            // // we can only have things in inventory if we actually bought it, so check to see if the order has the purchase item
-            // PurchaseOrderItemEntity purchaseOrderItemExists = purchaseOrderExists.ListOfPurchaseOrderItems.FirstOrDefault(g => g.ProductId == model.ProductId);
-            // if(purchaseOrderItemExists is null){
-            //     return false;
-            // }
-            // // we can only store inventory if the location for it exsits
-            // LocationEntity locationExists = await _dbContext.Locations.FindAsync(model.LocationId);
-            // if (locationExists == null || locationExists.RetailerId != _retailerId) 
-            // {
-            //     return false;
-            // }
-            // //getting associated purhcaseorderitem to find out how many we can put in stock 
-            // InventoryItemEntity entity = new InventoryItemEntity
-            // {
-            //     PurchaseOrderId = model.PurchaseOrderId,
-            //     RetailerId = model.RetailerId,
-            //     ProductId = model.ProductId,
-            //     LocationId = model.LocationId,
-            //     Stock = model.Stock
-            // };
-
-            // purchaseOrderItemExists.Quantity = purchaseOrderItemExists.Quantity - model.Stock;
-
-            // locationExists.Capacity = locationExists.Capacity - model.Stock;
-
-
-            // _dbContext.InventoryItems.Add(entity);
-            // int numberOfChanges = await _dbContext.SaveChangesAsync();
-            // return numberOfChanges == 3;
         }
-
         public async Task<bool> UpdateInventoryItemAsync(InventoryItemUpdate model)
         {
 
