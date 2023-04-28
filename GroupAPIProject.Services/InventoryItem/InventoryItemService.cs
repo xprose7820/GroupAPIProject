@@ -1,6 +1,7 @@
 ﻿using GroupAPIProject.Data;
 using GroupAPIProject.Data.Entities;
 using GroupAPIProject.Models.InventoryItem;
+using GroupAPIProject.Models.Location;
 using GroupAPIProject.Models.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -158,14 +159,28 @@ namespace GroupAPIProject.Services.InventoryItem
             }
             InventoryItemDetail inventoryItemDetail = new InventoryItemDetail
             {
-                Id = inventoryItemExists.Id,
+                InventoryItemId = inventoryItemExists.Id,
                 PurchaseOrderId = inventoryItemExists.PurchaseOrderId,
                 LocationId = inventoryItemExists.LocationId,
                 Stock = inventoryItemExists.Stock,
             };
             return inventoryItemDetail;
-
         }
+        //public async Task<IEnumerable<InventoryItemDetail>> GetInventoryItemListByLocationIdAsync(int locationId)
+        //{
+        //    LocationEntity locationExists = await _dbContext.Locations.Where(entity => entity.RetailerId == _retailerId)
+        //        .FirstOrDefaultAsync(g => g.Id == locationId);
+        //    var inventoryItemToDisplay = await _dbContext.InventoryItems.Where(g => g.LocationId == locationId)
+        //        .Select(entity => new InventoryItemDetail
+        //        {
+        //            InventoryItemId = entity.Id,
+        //            PurchaseOrderId = entity.PurchaseOrderId,
+        //            LocationId = entity.LocationId,
+        //            Stock = entity.Stock,
+        //        }).ToListAsync();
+        //
+        //    return inventoryItemToDisplay;
+        //}
 
 
     }

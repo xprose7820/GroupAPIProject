@@ -1,5 +1,6 @@
 ﻿using GroupAPIProject.Data;
 using GroupAPIProject.Data.Entities;
+using GroupAPIProject.Models.Location;
 using GroupAPIProject.Models.Product;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -62,7 +63,18 @@ namespace GroupAPIProject.Services.Product
             };
             return productDetail;
         }
-
+        public async Task<IEnumerable<ProductListItem>> GetProductListAsync(int supplierId)
+        {
+            var productExists = await _dbContext.Products.Where(g => g.SupplierId == supplierId)
+            .Select(g => new ProductListItem
+            {
+                ProductId = g.Id,
+                ProductName = g.ProductName,
+                Category = g.Category,
+                Price = g.Price,
+            }).ToListAsync();
+            return productExists;
+        }
         public async Task<bool> UpdateProductAsync(ProductUpdate model)
         {
             ProductEntity productExists = await _dbContext.Suppliers.Where(g => g.Id == model.SupplierId)

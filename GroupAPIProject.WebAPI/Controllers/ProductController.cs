@@ -35,8 +35,7 @@ namespace GroupAPIProject.WebAPI.Controllers
                 return BadRequest("Product Creation Failed");
             }
         }
-        [Authorize(Policy = "CustomRetailerEntity")]
-        [Authorize(Policy = "CustomAdminEntity")]
+
         [HttpGet("{supplierId:int}/{productId:int}")]
         public async Task<IActionResult> GetProductById([FromRoute] int supplierId,[FromRoute] int productId)
         {
@@ -50,6 +49,18 @@ namespace GroupAPIProject.WebAPI.Controllers
                 return NotFound();
             }
             return Ok(productDetail);
+        }
+
+ 
+        [HttpGet("{supplierId:int}")]
+        public async Task<IActionResult> GetProductList([FromRoute] int supplierId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var productsToDisplay = await _productService.GetProductListAsync(supplierId);
+            return Ok(productsToDisplay);
         }
         [Authorize(Policy = "CustomAdminEntity")]
         [HttpPut]

@@ -47,6 +47,16 @@ namespace GroupAPIProject.WebAPI.Controllers
             }
             return Ok(inventoryItemDetail);
         }
+        //[HttpGet("{locationId:int}")]
+        //public async Task<IActionResult> GetInventoryItemListByLocationId([FromRoute] int locationId)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+        //    var inventoryItemToDisplay = await _inventoryItemService.GetInventoryItemListByLocationIdAsync(locationId);
+        //    return Ok(inventoryItemToDisplay);
+        //}
         [HttpPut]
         public async Task<IActionResult> UpdateInventoryById([FromBody] InventoryItemUpdate model)
         {
